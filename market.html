@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Market Price Checker - AgriGuru</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5fff5;
+      padding: 20px;
+    }
+    .container {
+      background-color: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 400px;
+      margin: auto;
+    }
+    h1 {
+      text-align: center;
+      color: #2e7d32;
+    }
+    label {
+      font-weight: bold;
+    }
+    select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    #result {
+      padding: 10px;
+      background-color: #e8f5e9;
+      border: 1px solid #a5d6a7;
+      border-radius: 5px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>💹 Market Price Checker</h1>
+
+    <label for="city">Select City:</label>
+    <select id="city">
+      <option value="Kolkata">Kolkata</option>
+      <option value="Mumbai">Mumbai</option>
+      <option value="Delhi">Delhi</option>
+      <option value="Chennai">Chennai</option>
+      <option value="Bengaluru">Bengaluru</option>
+    </select>
+
+    <label for="crop">Select Crop:</label>
+    <select id="crop">
+      <option value="Rice">Rice</option>
+      <option value="Wheat">Wheat</option>
+      <option value="Potato">Potato</option>
+      <option value="Tomato">Tomato</option>
+      <option value="Maize">Maize</option>
+    </select>
+
+    <button onclick="getPrice()">🔍 Check Price</button>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+    function getPrice() {
+      const city = document.getElementById("city").value;
+      const crop = document.getElementById("crop").value;
+      const resultDiv = document.getElementById("result");
+
+      resultDiv.innerHTML = `<p>Fetching price for <strong>${crop}</strong> in <strong>${city}</strong>...</p>`;
+
+      // Simulated API response delay
+      setTimeout(() => {
+        const price = (Math.random() * 50 + 10).toFixed(2); // ₹10 to ₹60/kg
+        resultDiv.innerHTML = `
+          <h3>📈 Current Market Price</h3>
+          <p>City: <strong>${city}</strong></p>
+          <p>Crop: <strong>${crop}</strong></p>
+          <p>Price: <strong>₹${price}</strong> per kg</p>
+        `;
+      }, 1000);
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Crop Recommendation - AgriGuru</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>🌱 Crop Recommendation</h1>
+    <p>Based on your location, we’ll suggest the best crops.</p>
+
+    <form id="cropForm">
+      <label for="season">Select Season:</label><br>
+      <select id="season" required>
+        <option value="">--Choose Season--</option>
+        <option value="Kharif">Kharif</option>
+        <option value="Rabi">Rabi</option>
+        <option value="Zaid">Zaid</option>
+      </select><br><br>
+
+      <label for="soil">Select Soil Type:</label><br>
+      <select id="soil" required>
+        <option value="">--Choose Soil--</option>
+        <option value="Alluvial">Alluvial</option>
+        <option value="Black">Black</option>
+        <option value="Red">Red</option>
+        <option value="Laterite">Laterite</option>
+        <option value="Sandy">Sandy</option>
+      </select><br><br>
+
+      <button type="submit">Get Recommendations</button>
+    </form>
+
+    <div id="result" style="margin-top: 20px;"></div>
+  </div>
+
+  <script>
+    document.getElementById('cropForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const season = document.getElementById('season').value;
+      const soil = document.getElementById('soil').value;
+      const lat = localStorage.getItem("user_lat");
+      const lon = localStorage.getItem("user_lon");
+
+      if (!lat || !lon) {
+        alert("Location not found. Please go back and set your location.");
+        return;
+      }
+
+      // Step 1: Fetch temperature from backend /weather
+      fetch(`http://127.0.0.1:5000/weather?lat=${lat}&lon=${lon}`)
+        .then(res => res.json())
+        .then(weather => {
+          if (!weather.temp) throw new Error("Invalid weather response");
+          const temperature = weather.temp;
+
+          // Step 2: Now send to /recommend with temperature
+          const payload = {
+            temperature: temperature,
+            season: season,
+            soil: soil
+          };
+
+          return fetch('http://127.0.0.1:5000/recommend', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+        })
+        .then(res => res.json())
+        .then(data => {
+          if (data.recommended_crop) {
+            document.getElementById('result').innerHTML = `
+              <h3>🌾 Recommended Crop:</h3>
+              <p>${data.recommended_crop}</p>
+            `;
+          } else {
+            throw new Error("Crop not found in response");
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          document.getElementById('result').innerHTML = `<p>❌ Failed to get crop recommendations.</p>`;
+        });
+    });
+  </script>
+</body>
+</html>

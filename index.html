@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>AgriGuru - Smart Advisory</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>🌾 Welcome to AgriGuru!</h1>
+    <p>Let us know your location to provide tailored agricultural support.</p>
+
+    <!-- Location Section -->
+    <section id="location-section">
+      <h2>📍 Step 1: Choose Your Location</h2>
+      <button onclick="getLocation()">📍 Use My Current Location</button>
+      <p>OR</p>
+      <div class="manual-location">
+        <select id="stateSelect">
+          <option value="">Select State</option>
+          <option value="WB">West Bengal</option>
+          <option value="MH">Maharashtra</option>
+        </select>
+
+        <select id="districtSelect">
+          <option value="">Select District</option>
+          <option value="Kolkata">Kolkata</option>
+          <option value="Mumbai">Mumbai</option>
+        </select>
+
+        <button onclick="submitManualLocation()">Submit Manual Location</button>
+      </div>
+    </section>
+
+    <!-- Intent Section -->
+    <section id="intent-section" style="display: none;">
+      <h2>🎯 Step 2: What Would You Like To Do?</h2>
+      
+	<button onclick="selectIntent('recommend')">🌱 I want a crop recommendation</button>
+        <button onclick="selectIntent('dashboard')">🌾 I already have a crop</button>
+
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Sell Crops to Priya</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f9f3;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+            text-align: center;
+            padding: 8px;
+        }
+
+        input,
+        select,
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<script src="language.js"></script>
+
+<body>
+    <div class="header">
+        <img src="argi guru logo.png" alt="AgriGuru Logo" class="logo" />
+        <div class="lang-btn">
+            <button class="lang-toggle" onclick="toggleLanguage()">🌐 Language</button>
+            <div class="lang-options" id="langOptions">
+                <button onclick="setLanguage('en')">English</button>
+                <button onclick="setLanguage('hi')">हिन्दी</button>
+                <button onclick="setLanguage('bn')">বাংলা</button>
+                <button onclick="setLanguage('ta')">தமிழ்</button>
+                <button onclick="setLanguage('te')">తెలుగు</button>
+                <button onclick="setLanguage('gu')">ગુજરાતી</button>
+                <button onclick="setLanguage('mr')">मराठी</button>
+                <button onclick="setLanguage('kn')">ಕನ್ನಡ</button>
+                <button onclick="setLanguage('ml')">മലയാളം</button>
+                <button onclick="setLanguage('ur')">اردو</button>
+                <button onclick="setLanguage('pa')">ਪੰਜਾਬੀ</button>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <h2 data-i18n="sellCaption">🌾 Sell Crops to Priya</h2>
+
+        <h4 data-i18n="rates">📈 Priya Rates (per kg)</h4>
+        <table>
+            <tr>
+                <th data-i18n="th1">Crop</th>
+                <th data-i18n="th2">Price (₹)</th>
+            </tr>
+            <tr>
+                <td data-i18n="td3">Wheat</td>
+                <td data-i18n="td4">₹22</td>
+            </tr>
+            <tr>
+                <td data-i18n="td5">Rice</td>
+                <td data-i18n="td6">₹24</td>
+            </tr>
+            <tr>
+                <td data-i18n="td7">Maize</td>
+                <td data-i18n="td8">₹18</td>
+            </tr>
+            <tr>
+                <td data-i18n="td9">Mustard</td>
+                <td data-i18n="td10">₹50</td>
+            </tr>
+            <tr>
+                <td data-i18n="td1">Potato</td>
+                <td data-i18n="td2">₹10</td>
+            </tr>
+        </table>
+
+        <form id="sellForm">
+            <label for="crop" data-i18n="cropSelect">Select Crop:</label>
+            <select id="crop" required>
+                <option value="">-- Select --</option>
+                <option value="Wheat" data-i18n="wheat">Wheat</option>
+                <option value="Rice" data-i18n="rice">Rice</option>
+                <option value="Maize" data-i18n="maize">Maize</option>
+                <option value="Mustard" data-i18n="mustard">Mustard</option>
+                <option value="Potato" data-i18n="potato">Potato</option>
+            </select>
+
+            <label for="amount" data-i18n="amtSell">Amount to Sell (kg):</label>
+            <input type="number" id="amount" min="1" required />
+
+            <label for="phone" data-i18n="sellPh">Your Phone Number:</label>
+            <input type="tel" id="phone" required pattern="[0-9]{10}" />
+
+            <button type="submit" data-i18n="submit">Submit</button>
+        </form>
+
+        <p id="response"></p>
+    </div>
+
+    <script>
+        document.getElementById("sellForm").addEventListener("submit", async function (e) {
+            e.preventDefault();
+            const crop = document.getElementById("crop").value;
+            const amount = document.getElementById("amount").value;
+            const phone = document.getElementById("phone").value;
+
+            const response = await fetch("/submit-sale", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    crop,
+                    amount,
+                    phone
+                })
+            });
+
+            const result = await response.text();
+            document.getElementById("response").innerText = result;
+
+            // Reset form
+            document.getElementById("sellForm").reset();
+        });
+    </script>
+
+    <script>
+        function toggleLanguage() {
+            const menu = document.getElementById("langOptions");
+            menu.style.display = menu.style.display === "block" ? "none" : "block";
+        }
+
+        document.addEventListener("click", function (e) {
+            const langMenu = document.getElementById("langOptions");
+            if (!e.target.closest('.lang-btn')) {
+                langMenu.style.display = "none";
+            }
+        });
+    </script>
+    <script src="language.js"></script>
+
+</body>
+
+</html>

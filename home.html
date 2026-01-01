@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>AgriGuru - Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+            height: 100vh;
+            background-color: #f1f9f1;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('argi guru logo.png') no-repeat center center;
+            background-size: contain;
+            opacity: 0.07;
+            z-index: 0;
+        }
+        
+        .main-content {
+            position: relative;
+            z-index: 1;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 40px auto;
+            max-width: 600px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            color: #2f633e;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        
+        h1 span {
+            display: block;
+        }
+        
+        p {
+            font-size: 1.2em;
+            color: #555;
+        }
+        
+        .buttons {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .buttons a {
+            padding: 12px 20px;
+            text-decoration: none;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        
+        .buttons a:hover {
+            background-color: #388e3c;
+        }
+        
+        .header {
+            width: 100%;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #eaf5ea;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .header img.logo {
+            height: 60px;
+        }
+        
+        .lang-btn {
+            position: relative;
+        }
+        
+        .lang-toggle {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .lang-options {
+            display: none;
+            position: absolute;
+            top: 45px;
+            right: 0;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            overflow: hidden;
+            z-index: 10;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .lang-options button {
+            background: none;
+            border: none;
+            padding: 10px 15px;
+            width: 100%;
+            text-align: left;
+            font-size: 1em;
+            cursor: pointer;
+        }
+        
+        .lang-options button:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Top Header with logo and language selector -->
+    <div class="header">
+        <img src="argi guru logo.png" alt="AgriGuru Logo" class="logo" />
+        <div class="lang-btn">
+            <button class="lang-toggle" onclick="toggleLanguage()">🌐 Language</button>
+            <div class="lang-options" id="langOptions">
+                <button onclick="setLanguage('en')">English</button>
+                <button onclick="setLanguage('hi')">हिन्दी</button>
+                <button onclick="setLanguage('bn')">বাংলা</button>
+                <button onclick="setLanguage('ta')">தமிழ்</button>
+                <button onclick="setLanguage('te')">తెలుగు</button>
+                <button onclick="setLanguage('gu')">ગુજરાતી</button>
+                <button onclick="setLanguage('mr')">मराठी</button>
+                <button onclick="setLanguage('kn')">ಕನ್ನಡ</button>
+                <button onclick="setLanguage('ml')">മലയാളം</button>
+                <button onclick="setLanguage('ur')">اردو</button>
+                <button onclick="setLanguage('pa')">ਪੰਜਾਬੀ</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <h1>
+            <span>Welcome</span>
+            <span>to</span>
+            <span>AgriGuru</span>
+        </h1>
+        <p data-i18n="tagline">Your AI-powered farming assistant</p>
+
+        <div class="buttons">
+            <a href="index.html" data-i18n="startAdvisory">Start Advisory</a>
+            <a href="sell-crops.html" data-i18n="sellCrop">Sell Crop</a>
+            <a href="about_us.html" data-i18n="aboutUs">About Us</a>
+        </div>
+    </div>
+
+    <!-- Language Toggle Script -->
+    <script>
+        function toggleLanguage() {
+            const menu = document.getElementById("langOptions");
+            menu.style.display = menu.style.display === "block" ? "none" : "block";
+        }
+
+        document.addEventListener("click", function(e) {
+            const langMenu = document.getElementById("langOptions");
+            if (!e.target.closest('.lang-btn')) {
+                langMenu.style.display = "none";
+            }
+        });
+    </script>
+
+    <!-- Load language settings -->
+    <script src="language.js"></script>
+</body>
+
+</html>
